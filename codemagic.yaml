@@ -1,22 +1,3 @@
-workflows:
-  android-debug:
-    name: SubFlow Android Debug
-    instance_type: mac_mini_m2
-    max_build_duration: 60
-
-    scripts:
-      - name: Set Android SDK location
-        script: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
-
-      - name: Download Gradle 8.7
-        script: |
-          curl -L -o gradle-8.7-bin.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
-          unzip -q gradle-8.7-bin.zip -d "$HOME"
-
-      - name: Build debug APK
-        script: |
-          "$HOME/gradle-8.7/bin/gradle" :app:assembleDebug
-
-    artifacts:
-      - app/build/outputs/apk/debug/app-debug.apk
+- name: Build debug APK
+  script: |
+    "$HOME/gradle-8.7/bin/gradle" :app:assembleDebug
