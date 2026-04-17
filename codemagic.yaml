@@ -1,4 +1,6 @@
-workflows:
+
+
+ workflows:
   android-debug:
     name: SubFlow Android Debug
     instance_type: mac_mini_m2
@@ -9,10 +11,14 @@ workflows:
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
 
+      - name: Download Gradle 8.7
+        script: |
+          curl -L -o gradle-8.7-bin.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip -q gradle-8.7-bin.zip -d "$HOME"
+
       - name: Build debug APK
         script: |
-          chmod +x ./gradlew
-          ./gradlew assembleDebug
+          "$HOME/gradle-8.7/bin/gradle" assembleDebug
 
     artifacts:
-      - app/build/outputs/apk/debug/app-debug.apk
+      - app/build/outputs/apk/debug/app-debug.apk  
